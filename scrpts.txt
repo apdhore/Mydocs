@@ -1,0 +1,248 @@
+<h1>This is Akash's Website</h1>
+
+
+
+
+
+
+[webserver]
+172.31.10.117
+[dbserver]
+172.31.2.25
+
+
+---
+ - hosts: webserver
+   tasks:
+    - command: date
+      register: xyz
+    - debug:
+       msg: "{{ xyz.stdout }}" 	
+
+
+
+
+
+
+
+---
+ - name:running on webserver
+   hosts: webserver
+   tasks:
+    - name: running date command
+      command: date
+      register: xyz
+    - debug:
+       msg: "{{ xyz.stdout }}"
+ - name: play2
+   hosts: dbserver
+   tasks:
+    - name: variable creation
+      var:
+       test: testing
+    - name:testing o/p 
+      debug:
+       msg: "this is o/p of variable {{ test }}"
+
+
+---
+ - name: Run Apache on webserver
+   hosts: webserver
+   tasks:
+    service:
+     name: httpd
+     state: started
+
+
+---
+ - name: uninstall/install Apache on webserver
+   hosts: webserver
+   tasks:
+   - name: installing task
+     yum:
+       name: httpd
+       state: installed
+   - name: running apache
+     service:
+       name: httpd
+       state: started
+
+
+
+---
+ - name: creating directry on slave/webserver
+   hosts: webserver
+   vars:
+    dir:
+    - ad2
+    - ad3
+   tasks:
+    - command: mkdir /home/ec2-user/{{ item }}
+      with_items:
+       - "{{ dir }}"
+
+
+
+
+
+
+========================================================
+puppet
+================================
+
+node default{
+
+package {'apache2':
+ensure => purged,
+}
+
+file { '/tmp/status.txt':
+
+content => 'installed',
+mode => '0644',
+}
+package {'tree': ensure => 'installed'}
+}
+
+
+----------------------------------------------
+
+using variables
+
+node default{
+
+$mypackages = ['apache2', 'tree']
+
+package {$mypackages: ensure => 'installed'}
+
+}
+
+
+-----------------------------
+
+
+
+
+node default{
+
+$mypackages = ['apache2', 'tree']
+
+package {$mypackages: ensure => 'installed'}
+
+
+file { '/tmp/1.txt':
+  ensure => 'present',
+}
+
+
+-------------------------------
+
+node default{
+file { '/tmp/1.txt':
+  ensure => 'present',
+  content => 'Akash Dhore'
+}
+
+
+}
+
+========================Ansible again=============
+
+---
+ - hosts: web
+ - tasks: 
+     command: date
+
+-----------------------
+
+---
+ - hosts: web
+   tasks:
+    - command: date
+      register: output
+    - debug:
+       msg: "{{ output.stdout }}"
+-------------------------------------------------
+
+---
+ - name: running on web
+   hosts: web
+   tasks:
+    - name: rruning date command
+      command: date
+      register: output
+    - name: printing output
+      debug:
+       msg: "{{ output.stdout }}"
+
+
+
+----------------------
+
+---
+ - name: running on web
+   hosts: web
+   tasks:
+    - name: rruning date command
+      command: date
+      register: output
+    - name: printing output
+      debug:
+       msg: "{{ output.stdout }}"
+    - name: removing dir
+      command: rmdir dhore
+---------------------------------------------------------
+---
+ - name: running on web
+   hosts: web
+   tasks:
+    - name: rruning date command
+      command: date
+      register: output
+    - name: printing output
+      debug:
+       msg: "{{ output.stdout }}"
+ - name: running on db
+   hosts: db
+   tasks:
+       - name: running debug module on db
+         debug:
+          msg: "testing"
+--------------------------------------------------------------
+
+---
+ - name: running on web
+   hosts: web
+   tasks:
+    - name: rruning date command
+      command: date
+      register: output
+    - name: printing output
+      debug:
+       msg: "{{ output.stdout }}"
+ - name: running on db
+   hosts: db
+   vars:
+    test: testing
+   tasks:
+       - name: running debug module on db
+         debug:
+          msg: "{{test}}"
+
+<<<< note: {{ }} if value of declared variable is to be printentd >>>>>>>>>>>>
+
+-------------------------------------------------------------------------------------------------------
+
+---
+ - name: installing apache on web
+   hosts: web
+   tasks:
+    - name: installation
+      yum:
+       name: httpd
+       state: present
+    - name: starting apache
+      service:
+       name: httpd
+       state: started
+

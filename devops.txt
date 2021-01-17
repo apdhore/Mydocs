@@ -1,0 +1,236 @@
+Waterfall Methodology
+Analyze plan design build test deploy	====> not continuous(straight)
+So no return path
+
+
+Agile methodology:
+Amnalyze plan	   ====> not continuous(straight)	
+Desingn build test ====> continuous(cirle)
+Deploy		   ====> not continuous(straight)
+
+
+
+Devops is Methodology 
+Every thing is continuous 
+*Genkins tool is the heart of DevOps*
+Git is the most famouse tool for version controll ===> starting tool
+Genkins is continuous integration tool 
+Details:
+when developer commit changes in source(push to Main server via GIT) Genkins pick that script/program and build it(compile, code review, unit testin i.e testing of part by part, then packagingi.e pack in  jar or any executable file)ops 
+
+
+
+In Agile and DevOps Complete development is divided into chunks and in Agile whole process (test/feedback/build/mtp/client) need to follow for chunks but in DevOps process for chunks is automated so very less times(hrs to 1-2 days)
+
+git init   ---------------- to initiate git
+
+touch 1.txt ---- create empty file
+git status
+
+git add filename ----------- to add to staging
+git config --global user.email xyz@abc.com
+git config --global user.name akash
+
+git commit -m "message xyz" --------------- to move to git (local repo), here -m is message
+
+git log ---------------------------- shows how many different commit happens
+
+cat >> 1.txt ------------------to write in file 1.txt
+
+git diff commit id 1 commit id 2
+
+git revert commitidX ------------it will revert/rollback changes done by commitidX
+
+git remote add origin https//github/xyzgsjdjkdkddkkffnfkfl  ------------------------to tell local repo(git) that  https//github/xyzgsjdjkdkddkkffnfkfl  is my centralized/remote (github) repo.  Now after that we cam push / pull code to remote (github) repo
+git push origin master(branch name)------ it will push/upload commited local repo(git) files to remote repo(github) https//github/xyzgsjdjkdkddkkffnfkfl
+
+git clone https//github/xyzgsjdjkdkddkkffnfkfl -------------------to download from github or download complete repo
+
+git pull origin master ------------------- will check difference in repo and nullify the difference i.e sync git with github
+
+git branch : to check branches
+ 
+git branch <branch name> : to create branch
+
+git checkout <branch name>: to enter in branch
+
+git branch  -D <branch name> : to delete branch
+
+git merge <branch name> : to merge current banch with <branch name>
+
+git log --graph --pretty=oneline
+
+git log --pretty=oneline
+ 
+git rebase <sub branch> : we can download data from master branch to sub branch
+
+git stash : to draft content of branch without commit so that other branches cannot see the content
+
+git stash pop: to revert from stash
+
+git remote add origin https://github.com/apdhore/CAPSTONE.git  
+
+git push origin master : to push/upload data on github
+
+git pull origin master : to synch with github
+
+
+
+git tag <version no.>  ------------------- to create version. This command use after commit or after adding file to git. Say created f1 and added it (commited) to git then tag it as V0
+
+git tag --------------------------- to check how many versions
+
+git checkout <version name> -------- to go to specific version
+
+docker images : to see docker images
+
+docker pull <image name> (ubuntu/centos/windows): to download image from docker. This command usually given in dockerhub website
+
+docker run -it -d centos : to run image(to create container) -it : iteractive mode
+
+docker ps
+
+docker exec -it <<containerid>> bash : to go into container(VM)
+
+docker commit <container id> imagename u want to create:  to create image
+also
+docker tag imagename     ------------- to create image
+
+docker stop <container id>  ----- to stop container
+docker kill <container id>  ----- to stop container
+
+docker start <container id>  ----- to start container
+
+docker rm -rf <<containerid>> :  to remove container
+
+docker rm -f $(docker ps -a -q) : to remove all the container
+
+docker rmi <imagename> : to remove image
+service apache2 status
+
+docker run -it -p 80:80 -d webserverimg
+
+docker login  -----------------to login to dockerhub from cmd to upload our own customized image
+
+docker push <imagename> : to upload image on dockerhub
+
+docker build . -t new_dockerfile  --------------- Build the docker file with script written in Dockerfile
+
+docker volume ls ------------- to show how many docker volumes
+
+docker volume  create my-vol   --------------------- it will create volum
+
+docker run -it --mount source=my-vol,destination=/app -d ubuntu
+create some files in/app
+remove the container  --------------------- ubuntu container wiil be removed
+attach volume to another container as below
+docker run -it --mount source=my-vol,destination=/demo -d ubuntu
+
+so here files created in /app folder will be available in /demo folder
+
+Bind Mounts:
+docker run -it -v /home/ubuntu/mount:/demo -d ubuntu    ---------------------------------- here we mapped local dir /mount with container dir /demo so now bothare in sync
+
+Linking docker Containers
+run container with name
+docker run -it --name container1 -d ubuntu   ---------now we found container with name container
+docker run -it  --name container3 --link container1 -d ubuntu  ----------it run container3 and link with container1
+
+sudo curl -L "https://github.com/docker/compose/releases/download/1.23.2/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose : to download docker composer where sudo curl is to go for https
+
+docker-compose --version
+
+docker-compose up -d
+
+docker-compose down
+
+docker-compose up -d --scale <instance name>=<no. of instances>
+
+docker run -d -p 5000:5000 --restart=always -name myregistry registry:2    -------------regestry:2 is image name need to download fro docker hub to create docker regestry locallyy
+
+docker tag ubuntu myversion/ubuntu ---------- create image from exixting image
+
+docker swarm init --advertise-addr=13.234.113.221     -------------------to start docker swarm as master so need to provide ip which consider as master. Also this command will generate one Tocken which will be used to join slave node with this master
+
+docker node ls  ------------to check nodes , to check which is master which is slave
+
+docker service create --name nginx --replicas 3 -p 80:80 nginx  ---------------- used from master node when 2 run /create containers/services
+
+docker network ls  -------to check how many  network
+docker network create -d overlay my-overlay
+
+docker save <image name> > name.tar ------ to create tar file of image which can be shareable to anyone
+
+doker load < name.tar ------------ to load image in docker
+
+docker export <container id> > name.tar ---------to create tar file from running container
+
+docker image import name.tar <ne image name u want to give> --------------- to create image of tar file(created from running container)
+
+
+yum install https://dl.fedoraproject.org/pub/epel/epel-release-latest-7.noarch.rpm   --------------- to download ansible packages
+
+yum install ansible
+
+ansible-doc -l | more   --- for module documentaion
+
+ansible-doc -s yum    -----------to sreaCH FOR yum module -s is for search
+
+ansible webservers -m ping --------------------- -m module
+
+ansible webservers -m shell -a 'ls /home'  --------------------------- -a atribute  --------to run unix command
+
+ansible 172.31.27.53 -m yum -a "name=httpd state=present"
+
+ansible -i /etc/xyz/hosts ------------------------------here if I have hosts indifferent inventary file that default so I will use -i(inventory)
+
+ansible-playbook <.yml>  ------ to run yamal scripts/file/playbook
+
+ansible-playbook <.yml> --syntax-check   -------to check syntax
+
+df
+puppet resource --type  --- to check list of resources(modules)
+
+puppet resource file /etc/1.txt -------------------------- to check how to use particular resource
+
+hostname slave ---change hostname
+
+vi /etc/hostname
+
+5ff52720b86140a993ebc89954178298
+
+http://13.235.27.103:8080
+
+
+apt-get install default-jdk
+
+java -jar agent.jar -jnlpUrl http://13.127.242.8:8080/computer/Slave1/slave-agent.jnlp -secret 3823397ad7939277940c7cd7e1d12212f46fc865e8eb73e6bab21d1dd0c78a56 -workDir "/home/ubuntu/jenkins"
+
+java -jar agent.jar -jnlpUrl http://13.234.20.152:8080/computer/Slave1/slave-agent.jnlp -secret 3823397ad7939277940c7cd7e1d12212f46fc865e8eb73e6bab21d1dd0c78a56 -workDir "/home/ubuntu/jenkins"
+
+if geting permission denied error while using docker with jenkins then run below command to resolve permission denied error:
+
+sudo usermod -a -G docker jenkins
+reboot
+
+
+
+kubeadm init --apiserver-advertise-address=172.31.0.221 --pod-network-cidr=192.168.0.0/16 --ignore-preflight-errors=NumCPU
+
+here above command booting cluster where 172.31.0.221 is master server ip 
+
+kubeadm join 172.31.0.221:6443 --token mrjzv5.1wuyw4dqajuaqzgd \
+    --discovery-token-ca-cert-hash sha256:6001b19c7cf1cffef18431c814fd7e84c9c7334224d537326c00ee5c5ffcde1f    ------------------------this command use to join master slave , have to run on slave
+
+kubectl get pods  -----shows pods created by us
+kubectl apply -f nginx.yml
+
+============================= 
+Need to watch CI session again
+check how to setup tomcat server
+upload securti group change video on youtube
+in siebel
+github is private so we generated credentilas in github which we provided in Jenkins
+
+
+
